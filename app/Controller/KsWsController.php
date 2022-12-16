@@ -32,6 +32,11 @@ class KsWsController implements OnMessageInterface, OnOpenInterface, OnCloseInte
      */
     protected $redis;
 
+    /**
+     * @var int
+     */
+    protected $ttl = 60 * 5;
+
     public function __construct(KsService $ksService, Redis $redis)
     {
         $this->ksService = $ksService;
@@ -77,8 +82,12 @@ class KsWsController implements OnMessageInterface, OnOpenInterface, OnCloseInte
                 if (! $flag) {
                     throw new \Exception('会话过期请重新连接～');
                 }
-                $url = $frame->data;
 
+                if (! $this->redis->set($cofd . ':' . $flag, 1, ['nx', 'ex' => $this->ttl])) {
+                    throw new \Exception('请不要在同一个连接发送请求，如需请新建一个websocket连接～～');
+                }
+
+                $url = $frame->data;
                 if (empty($url) || ! strstr($url, 'https://live.kuaishou.com/u/')) {
                     throw new \Exception('cookie不能为空或直播地址无效（格式：https://live.kuaishou.com/u/xxxxx）');
                 }
@@ -107,7 +116,7 @@ class KsWsController implements OnMessageInterface, OnOpenInterface, OnCloseInte
             $this->redis->del($cofd);
             return;
         }
-        $this->redis->pipeline()->del($cofd, $res)->exec();
+        $this->redis->pipeline()->del($cofd, $res, $cofd . ':' . $res)->exec();
     }
 
     public function ping(int $fd)
@@ -118,6 +127,6 @@ class KsWsController implements OnMessageInterface, OnOpenInterface, OnCloseInte
         if (! $res) {
             return;
         }
-        $res->pipeline()->expire($cofd, 60 * 5)->expire($res, 60 * 5)->exec();
+        $res->pipeline()->expire($cofd, $this->ttl)->expire($res, $this->ttl)->expire($cofd . ':' . $res, $this->ttl)->exec();
     }
 }

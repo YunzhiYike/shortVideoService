@@ -168,7 +168,7 @@ class DyService
         while ($this->redis->get($this->flag)) {
             $client->push($data, WEBSOCKET_OPCODE_BINARY);
             Coroutine::sleep(10);
-            var_dump('ping');
+//            var_dump('ping');
         }
         var_dump('ping end');
     }
