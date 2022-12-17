@@ -21,6 +21,9 @@ composer update -o
 composer start
 ```
 
+## 连接测试
+![img.png](img.png)
+
 ## websocket路由地址
 - ws://ip:9502/ks (快手)
 - ws://ip:9502/dy (抖音)
