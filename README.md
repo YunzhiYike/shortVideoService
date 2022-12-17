@@ -1,36 +1,33 @@
-# Introduction
+# 抖音快手弹幕服务端
 
-This is a skeleton application using the Hyperf framework. This application is meant to be used as a starting place for those looking to get their feet wet with Hyperf Framework.
-
-# Requirements
-
-Hyperf has some requirements for the system environment, it can only run under Linux and Mac environment, but due to the development of Docker virtualization technology, Docker for Windows can also be used as the running environment under Windows.
-
-The various versions of Dockerfile have been prepared for you in the [hyperf/hyperf-docker](https://github.com/hyperf/hyperf-docker) project, or directly based on the already built [hyperf/hyperf](https://hub.docker.com/r/hyperf/hyperf) Image to run.
-
-When you don't want to use Docker as the basis for your running environment, you need to make sure that your operating environment meets the following requirements:  
+## 服务框架 Hyperf
 
  - PHP >= 7.3
  - Swoole PHP extension >= 4.5，and Disabled `Short Name`
  - OpenSSL PHP extension
  - JSON PHP extension
- - PDO PHP extension （If you need to use MySQL Client）
- - Redis PHP extension （If you need to use Redis Client）
- - Protobuf PHP extension （If you need to use gRPC Server of Client）
+ - PDO PHP extension 
+ - Redis PHP extension 
+ - Protobuf PHP extension 
 
-# Installation using Composer
+## 运行
+```bash
+// 更新composer依赖
 
-The easiest way to create a new Hyperf project is to use Composer. If you don't have it already installed, then please install as per the documentation.
+composer update -o
 
-To create your new Hyperf project:
+// 启动项目
 
-$ composer create-project hyperf/hyperf-skeleton path/to/install
+composer start
+```
 
-Once installed, you can run the server immediately using the command below.
+## websocket路由地址
+- ws://ip:9502/ks (快手)
+- ws://ip:9502/dy (抖音)
 
-$ cd path/to/install
-$ php bin/hyperf.php start
+## 心跳维持要求
++ 连接完服务端后请每隔4分钟向服务端发送内容为`ping`的数据，否则5分钟不发送数据服务端会自动断开
 
-This will start the cli-server on port `9501`, and bind it to all network interfaces. You can then visit the site at `http://localhost:9501/`
-
-which will bring up Hyperf default home page.
+## 项目定制
+- 语言方向🧭：易语言、php、python、Go、Java
+- 合作or收徒联系📮：wuaiyiyun2022@163.com

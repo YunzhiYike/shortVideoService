@@ -13,6 +13,8 @@
     "license": "Apache-2.0",
     "require": {
         "php": ">=7.3",
+        "ext-zlib": "*",
+        "google/protobuf": "^3.21",
         "hyperf/cache": "~2.2.0",
         "hyperf/command": "~2.2.0",
         "hyperf/config": "~2.2.0",
@@ -26,8 +28,7 @@
         "hyperf/process": "~2.2.0",
         "hyperf/redis": "~2.2.0",
         "hyperf/websocket-client": "^2.2",
-        "hyperf/websocket-server": "^2.2",
-      "ext-zlib": "*"
+        "hyperf/websocket-server": "^2.2"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",
